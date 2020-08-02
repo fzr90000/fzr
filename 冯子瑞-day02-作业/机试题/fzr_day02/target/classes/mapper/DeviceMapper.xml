@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.DeviceMapper">
+<select id="findAll" resultType="deviceVo" parameterType="deviceVo">
+SELECT
+d.deviceId,
+d.devicename,
+d.deviceram,
+d.color,
+d.price,
+d.status,
+d.createtime,
+d.devicetypeid,
+t.typename AS tname,
+t.deviceTypeId AS tid
+FROM
+device AS d ,
+devicetype AS t
+WHERE
+d.devicetypeid = t.deviceTypeId
+<if test="devicename!=null and devicename!=''">
+ and d.devicename like '%${devicename}%'
+
+</if>
+<if test="status!=null and status!=''">
+and d.status =#{status}
+</if>
+
+</select>
+
+<select id="selectWithname" parameterType="String" resultType="device">
+
+select * from device where devicename=#{devicename}
+
+</select>
+
+</mapper>
