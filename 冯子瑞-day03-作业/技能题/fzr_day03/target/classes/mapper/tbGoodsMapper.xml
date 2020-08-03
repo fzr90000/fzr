@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.tbGoodsMapper">
+<select id="findAll" resultType="goodsVo" parameterType="goodsVo">
+SELECT
+g.g_id,
+g.t_id,
+g.name,
+g.price,
+g.createtime,
+t.t_id AS tid,
+t.t_typename AS tname
+FROM
+tb_goods AS g ,
+tb_goodstype AS t
+WHERE
+g.t_id = t.t_id
+<if test="name !=null and name!=''">
+and g.name like '%${name}%'
+
+</if>
+<if test="start!=null">
+and g.createtime &gt;= #{start}
+</if>
+<if test="end!=null">
+and g.createtime &lt;= #{end}
+</if>
+
+</select>
+<select id="gettj" resultType="goodsVo">
+SELECT
+count(*) num,
+t.t_typename AS tname
+FROM
+tb_goods AS g ,
+tb_goodstype AS t
+WHERE
+g.t_id = t.t_id
+GROUP BY
+t.t_typename
+
+</select>
+
+</mapper>
