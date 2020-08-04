@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.pPersonMapper">
+
+<select id="findAll" parameterType="personVo" resultType="personVo">
+SELECT
+c.company_name AS cname,
+p.id,
+p.p_name,
+p.gender,
+p.cid,
+p.createtime
+FROM
+p_company AS c ,
+p_person AS p
+WHERE
+c.company_id = p.cid
+<if test="pName!=null  and pName !=''">
+and p.p_name like '%${pName}%'
+</if>
+<if test="cid!=null and cid!=''">
+and p.cid =#{cid}
+</if>
+
+</select>
+<select id="findByName" parameterType="String" resultType="pPerson">
+select * from p_person where p_name=#{getpName}
+</select>
+<select id="gettj" resultType="personVo">
+SELECT
+COUNT(*) num,
+c.company_name AS cname
+FROM
+p_company AS c ,
+p_person AS p
+WHERE
+c.company_id = p.cid GROUP BY c.company_name 
+
+
+</select>
+</mapper>
