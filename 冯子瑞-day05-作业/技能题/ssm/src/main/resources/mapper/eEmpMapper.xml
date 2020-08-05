@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.eEmpMapper">
+  <select id="findAll" parameterType="empVo" resultType="empVo">
+  SELECT
+e.e_id,
+e.e_name,
+e.birthday,
+e.gender,
+e.age,
+e.pic,
+e.d_depid,
+e.hobby,
+d.d_dname AS tname
+FROM
+e_emp AS e ,
+d_dept AS d
+WHERE
+e.d_depid = d.d_depid
+  <if test="eName!=null and eName!=''">
+  
+  and e.e_name like '%${eName}%'
+  </if>
+  <if test="start!=null">
+  and e.birthday &gt;= #{start}
+  </if>
+  <if test="end!=null">
+  
+  and e.birthday &lt;= #{end}
+  </if>
+  
+  </select>
+</mapper>
