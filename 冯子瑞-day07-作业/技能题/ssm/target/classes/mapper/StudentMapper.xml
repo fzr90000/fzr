@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.StudentMapper">
+<select id="findAll" parameterType="studentVo" resultType="studentVo">
+SELECT
+t.tname AS teaname,
+s.sid,
+s.sname,
+s.sex,
+s.pic,
+s.createtime,
+s.tid,
+t.tname AS teaname
+FROM
+student AS s ,
+teacher AS t
+WHERE
+s.tid = t.tid
+<if test="sname!=null and sname!=''">
+and s.sname like '%${sname}%'
+</if>
+<if test="tid!=null and tid!=''">
+and s.tid = #{tid}
+</if>
+</select>
+<select id="gettj" resultType="studentVo">
+SELECT
+COUNT(*) num,
+t.tname AS teaname
+FROM
+student AS s ,
+teacher AS t
+WHERE
+s.tid = t.tid
+GROUP BY
+t.tname
+
+</select>
+</mapper>
