@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.SchoolMapper">
+<select id="findAll" resultType="schoolVo" parameterType="schoolVo">
+SELECT
+s.id,
+s.schoolname,
+s.areaid,
+s.phone,
+s.address,
+s.status,
+s.createtime,
+a.areaname AS aname
+FROM
+area AS a ,
+school AS s
+WHERE
+s.areaid = a.id
+<if test="schoolname!=null and schoolname!=''">
+and s.schoolname like '%${schoolname}%'
+</if>
+
+</select>
+</mapper>
