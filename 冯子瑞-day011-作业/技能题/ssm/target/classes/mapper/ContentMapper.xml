@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.ContentMapper">
+
+<select id="findAll" resultType="contentVo" parameterType="contentVo">
+SELECT
+c.contentid,
+c.contentcategoryid,
+c.contenttitle,
+c.contenturl,
+c.picpath,
+c.price,
+c.status,
+c.createtime,
+g.categoryname AS gname
+FROM
+contentcategory AS g ,
+content AS c
+WHERE
+c.contentcategoryid = g.contentcategoryid
+<if test="contenttitle!=null and contenttitle!=''">
+and c.contenttitle like '%${contenttitle}%'
+</if>
+<if test="contentcategoryid!=null and contentcategoryid!=''">
+and c.contentcategoryid = #{contentcategoryid}
+</if>
+
+</select>
+<select id="gettj" resultType="contentVo">
+SELECT
+COUNT( * ) num,
+g.categoryname gname 
+FROM
+contentcategory AS g,
+content AS c 
+WHERE
+c.contentcategoryid = g.contentcategoryid 
+GROUP BY
+g.contentCategoryId
+</select>
+</mapper>
