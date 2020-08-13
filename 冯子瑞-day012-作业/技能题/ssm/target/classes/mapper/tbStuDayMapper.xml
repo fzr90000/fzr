@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.tbStuDayMapper">
+<select id="findAll" resultType="studentVo" parameterType="studentVo">
+SELECT
+m.mdname mname,
+s.sd_id,
+s.sdname,
+s.sdsex,
+s.sdhobby,
+s.sdbirth,
+s.mid
+FROM
+tb_major_day AS m ,
+tb_stu_day AS s
+WHERE
+s.mid = m.md_id
+<if test="start!=null">
+and s.sdbirth &gt;=#{start}
+</if>
+<if test="end!=null">
+and s.sdbirth &lt;=#{end}
+</if>
+</select>
+<select id="gettj" resultType="studentVo">
+SELECT
+m.mdname as mname,
+count(*) num 
+FROM
+tb_major_day AS m ,
+tb_stu_day AS s
+WHERE
+s.mid = m.md_id
+GROUP BY
+m.mdname
+</select>
+</mapper>
